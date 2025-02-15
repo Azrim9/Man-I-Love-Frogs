@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import Shop from "./components/Shop";
 
 const useStickyState = (defaultValue, name) => {
-  const [value, setValue] = React.useState(() => {
+  const [value, setValue] = useState(() => {
     if (typeof window === "undefined" || !window.localStorage) {
       return defaultValue;
     }
@@ -11,7 +12,7 @@ const useStickyState = (defaultValue, name) => {
     return persistedValue !== null ? JSON.parse(persistedValue) : defaultValue;
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.localStorage.setItem(name, JSON.stringify(value));
   }, [name, value]);
   return [value, setValue];
@@ -19,6 +20,8 @@ const useStickyState = (defaultValue, name) => {
 
 function App() {
   const [ribbitCount, setRibbitCount] = useStickyState(0, "count");
+  const [ownedFrogs, setOwnedFrogs] = useState([]);
+  const [isShopOpen, setIsShopOpen] = useState(false);
 
   return (
     <div className="h-screen bg-green-100">
@@ -32,6 +35,10 @@ function App() {
         >
           Croak
         </button>
+        <button onClick={() => setIsShopOpen(!isShopOpen)}>
+          {isShopOpen ? "Close Shop" : "Open Shop"}
+        </button>
+        {isShopOpen && <Shop />}
       </div>
     </div>
   );
