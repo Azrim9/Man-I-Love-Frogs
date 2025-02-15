@@ -1,0 +1,10 @@
+{
+  "Froguan": {
+    "Cost": 100,
+    "CroaksPerSecond": 1
+  },
+  "Ribbert": {
+    "Cost": 1000,
+    "CroaksPerSecond": 3
+  }
+}
