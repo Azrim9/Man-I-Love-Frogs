@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Shop from "./components/Shop";
 import useStickyState from "./hooks/useStickyState";
 
 function App() {
   const [ribbitCount, setRibbitCount] = useStickyState(0, "count");
   const [isShopOpen, setIsShopOpen] = useState(false);
+  const [ownedFrogs, setownedFrogs] = useState([]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRibbitCount((prev) => prev + 1);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="h-screen bg-green-100">
