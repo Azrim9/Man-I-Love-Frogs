@@ -1,15 +1,18 @@
 import frogs from "../frogs.json";
 
-const Shop = () => {
+const Shop = ({ buyFrog }) => {
   return (
     <div>
       <h2>Frog Shop</h2>
       <ul>
-        {Object.keys(frogs).map((frogName) => (
+        {Object.entries(frogs).map(([frogName, frogData]) => (
           <li key={frogName}>
             <div>
-              {frogName}, Croaks Per Second: {frogs[frogName].CroaksPerSecond},
-              Cost {frogs[frogName].Cost} Croaks
+              <button onClick={() => buyFrog(frogData.Cost)}>
+                Buy {frogName}
+              </button>{" "}
+              Croaks Per Second: {frogs[frogName].CroaksPerSecond}, Cost{" "}
+              {frogs[frogName].Cost} Croaks
             </div>
           </li>
         ))}
