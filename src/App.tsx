@@ -5,7 +5,10 @@ import useStickyState from "./hooks/useStickyState";
 function App() {
   const [ribbitCount, setRibbitCount] = useStickyState(0, "count");
   const [isShopOpen, setIsShopOpen] = useState(false);
-  const [ownedFrogs, setownedFrogs] = useState([]);
+
+  const buyFrog = (cost) => {
+    if (ribbitCount >= cost) setRibbitCount(ribbitCount - cost);
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -29,7 +32,7 @@ function App() {
         <button onClick={() => setIsShopOpen(!isShopOpen)}>
           {isShopOpen ? "Close Shop" : "Open Shop"}
         </button>
-        {isShopOpen && <Shop />}
+        {isShopOpen && <Shop buyFrog={buyFrog} />}
       </div>
     </div>
   );
