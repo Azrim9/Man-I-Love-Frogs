@@ -1,10 +1,38 @@
 {
-  "Froguan": {
+  "Tadpole": {
     "Cost": 100,
     "CroaksPerSecond": 1
   },
   "Ribbert": {
     "Cost": 1000,
-    "CroaksPerSecond": 3
+    "CroaksPerSecond": 5
+  },
+  "Froguan": {
+    "Cost": 10000,
+    "CroaksPerSecond": 10
+  },
+  "Lily": {
+    "Cost": 50000,
+    "CroaksPerSecond": 50
+  },
+  "Croak": {
+    "Cost": 100000,
+    "CroaksPerSecond": 100
+  },
+  "Pondica": {
+    "Cost": 250000,
+    "CroaksPerSecond": 250
+  },
+  "Frogler": {
+    "Cost": 500000,
+    "CroaksPerSecond": 500
+  },
+  "BULLFROG": {
+    "Cost": 999999,
+    "CroaksPerSecond": 1000
+  },
+  "The Golden Croak": {
+    "Cost": 10000000,
+    "CroaksPerSecond": 10000
   }
 }
