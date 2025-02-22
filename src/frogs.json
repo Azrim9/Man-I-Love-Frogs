@@ -1,38 +1,47 @@
 {
   "Tadpole": {
     "Cost": 100,
-    "CroaksPerSecond": 1
+    "CroaksPerSecond": 1,
+    "Young toad learning to swim..."
   },
   "Ribbert": {
     "Cost": 1000,
-    "CroaksPerSecond": 5
+    "CroaksPerSecond": 5,
+    "He likes to croak every now and then..."
   },
   "Froguan": {
     "Cost": 10000,
-    "CroaksPerSecond": 10
+    "CroaksPerSecond": 10,
+    "Chill frog visiting the pond"
   },
   "Lily": {
     "Cost": 50000,
-    "CroaksPerSecond": 50
+    "CroaksPerSecond": 50,
+    "She likes to sit on lilypads"
   },
   "Croak": {
     "Cost": 100000,
-    "CroaksPerSecond": 100
+    "CroaksPerSecond": 100,
+    "His parents werent very creative..."
   },
   "Pondica": {
     "Cost": 250000,
-    "CroaksPerSecond": 250
+    "CroaksPerSecond": 250,
+    "Self appointed owner of the pond"
   },
   "Frogler": {
     "Cost": 500000,
-    "CroaksPerSecond": 500
+    "CroaksPerSecond": 500,
+    "No one really knows how he got here but somethings a bit off about him.."
   },
   "BULLFROG": {
     "Cost": 999999,
-    "CroaksPerSecond": 1000
+    "CroaksPerSecond": 1000,
+    "RIBBIT"
   },
   "The Golden Croak": {
     "Cost": 10000000,
-    "CroaksPerSecond": 10000
+    "CroaksPerSecond": 10000,
+    "The greatest of all croaks"
   }
 }
