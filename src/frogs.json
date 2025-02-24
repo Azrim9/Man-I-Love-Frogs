@@ -39,9 +39,14 @@
     "CroaksPerSecond": 1000,
     "Description": "RIBBIT"
   },
-  "The Golden Croak": {
-    "Cost": 10000000,
+  "Frogathan": {
+    "Cost": 1000000,
     "CroaksPerSecond": 10000,
+    "Description": "The greatest of all croaks"
+  },
+  "The Golden Croak": {
+    "Cost": 15000000,
+    "CroaksPerSecond": 15000,
     "Description": "The greatest of all croaks"
   }
 }
