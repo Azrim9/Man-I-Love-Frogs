@@ -1,1 +1,1 @@
-An idle clicker game named Man I Love Frogs!
+An idle clicker game called "Man I Love Frogs" 🐸
