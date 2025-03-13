@@ -22,7 +22,7 @@ function App() {
       <div className="h-screen flex flex-col justify-between p-2">
         <div> Croak Points: {ribbitCount}</div>
         <button
-          className="border px-4 py-1 rounded-sm self-center bg-green-500 hover:bg-green-400 active:scale-95"
+          className="border px-4 py-1 rounded-sm self-center bg-green-500 hover:bg-green-400"
           onClick={() => {
             setRibbitCount(ribbitCount + 1);
           }}
