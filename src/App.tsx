@@ -18,7 +18,7 @@ function App() {
   }, []);
 
   return (
-    <div className="h-screen bg-green-100">
+    <div className="h-screen bg-gradient-to-b from-green-400 via-green-200 to-blue-600">
       <div className="h-screen flex flex-col justify-between p-2">
         <div> Croak Points: {ribbitCount}</div>
         <button
