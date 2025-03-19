@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import Shop from "./components/Shop";
 import useStickyState from "./hooks/useStickyState";
+import frogs from "./frogs.json";
 
 function App() {
   const [ribbitCount, setRibbitCount] = useStickyState(0, "count");
   const [isShopOpen, setIsShopOpen] = useState(false);
+  const [frogsList, setFrogsList] = useState(Object.entries(frogs));
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -13,9 +15,10 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
-  const buyFrog = (name, cost) => {
+  const buyFrog = (frogName, cost) => {
     if (ribbitCount >= cost) {
       setRibbitCount((prev) => prev - cost);
+      setFrogsList((prev) => prev.filter(([name]) => name !== frogName));
     }
   };
 
@@ -38,7 +41,7 @@ function App() {
         >
           {isShopOpen ? "Close Shop" : "Open Shop"}
         </button>
-        {isShopOpen && <Shop buyFrog={buyFrog} />}
+        {isShopOpen && <Shop frogsList={frogsList} buyFrog={buyFrog} />}
       </div>
     </div>
   );
