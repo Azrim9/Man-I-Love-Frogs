@@ -6,16 +6,18 @@ function App() {
   const [ribbitCount, setRibbitCount] = useStickyState(0, "count");
   const [isShopOpen, setIsShopOpen] = useState(false);
 
-  const buyFrog = (cost) => {
-    if (ribbitCount >= cost) setRibbitCount(ribbitCount - cost);
-  };
-
   useEffect(() => {
     const interval = setInterval(() => {
       setRibbitCount((prev) => prev + 1);
     }, 5000);
     return () => clearInterval(interval);
   }, []);
+
+  const buyFrog = (name, cost) => {
+    if (ribbitCount >= cost) {
+      setRibbitCount((prev) => prev - cost);
+    }
+  };
 
   return (
     <div className="h-screen bg-gradient-to-b from-green-400 via-green-200 to-blue-600">
