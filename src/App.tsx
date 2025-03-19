@@ -6,7 +6,10 @@ import frogs from "./frogs.json";
 function App() {
   const [ribbitCount, setRibbitCount] = useStickyState(0, "count");
   const [isShopOpen, setIsShopOpen] = useState(false);
-  const [frogsList, setFrogsList] = useState(Object.entries(frogs));
+  const [frogsList, setFrogsList] = useStickyState(
+    Object.entries(frogs),
+    "frogs"
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {
