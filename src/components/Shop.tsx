@@ -7,12 +7,13 @@ const Shop = ({ buyFrog }) => {
       <ul>
         {Object.entries(frogs).map(([frogName, frogData]) => (
           <li key={frogName}>
-            <div>
+            <div className="flex gap-2">
               <button onClick={() => buyFrog(frogData.Cost)}>
                 Buy {frogName}
-              </button>{" "}
-              Croaks Per Second: {frogs[frogName].CroaksPerSecond}, Cost{" "}
-              {frogs[frogName].Cost} Croaks
+              </button>
+              <div>Croaks Per Second: {frogs[frogName].CroaksPerSecond}, </div>
+              <div>Cost {frogs[frogName].Cost} Croaks, </div>{" "}
+              <div>Description: {frogs[frogName].Description}</div>
             </div>
           </li>
         ))}
