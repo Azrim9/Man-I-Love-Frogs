@@ -31,7 +31,7 @@ function App() {
         </button>
 
         <button
-          className="border px-4 py-1 rounded-sm self-center bg-green-500 hover:bg-green-400 fixed bottom-1"
+          className="border px-4 py-1 rounded-sm self-center bg-green-500 hover:bg-green-400 fixed bottom-2 right-2"
           onClick={() => setIsShopOpen(!isShopOpen)}
         >
           {isShopOpen ? "Close Shop" : "Open Shop"}
