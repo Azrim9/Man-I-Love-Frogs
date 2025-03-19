@@ -22,15 +22,16 @@ function App() {
       <div className="h-screen flex flex-col justify-between p-2">
         <div> Croak Points: {ribbitCount}</div>
         <button
-          className="border px-4 py-1 rounded-sm self-center bg-green-500 hover:bg-green-400"
+          className="border px-4 py-1 rounded-sm self-center bg-green-500 hover:bg-green-400 fixed"
           onClick={() => {
             setRibbitCount(ribbitCount + 1);
           }}
         >
           Croak
         </button>
+
         <button
-          className="border px-4 py-1 rounded-sm self-center bg-green-500 hover:bg-green-400"
+          className="border px-4 py-1 rounded-sm self-center bg-green-500 hover:bg-green-400 fixed bottom-1"
           onClick={() => setIsShopOpen(!isShopOpen)}
         >
           {isShopOpen ? "Close Shop" : "Open Shop"}
