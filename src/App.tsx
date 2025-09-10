@@ -6,22 +6,36 @@ import frogs from "./frogs.json";
 function App() {
   const [ribbitCount, setRibbitCount] = useStickyState(0, "count");
   const [isShopOpen, setIsShopOpen] = useState(false);
-  const [frogsList, setFrogsList] = useStickyState(
+  const [buyableFrogsList, setBuyableFrogsList] = useStickyState(
     Object.entries(frogs),
     "frogs"
   );
+  const [ownedFrogs, setOwnedFrogs] = useStickyState([], "ownedFrogs");
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setRibbitCount((prev) => prev + 1);
-    }, 5000);
+      let totalCroaksPerSecond = 0;
+      for (let i = 0; i < ownedFrogs.length; i++) {
+        let frogData = ownedFrogs[i][1];
+        totalCroaksPerSecond = totalCroaksPerSecond + frogData.CroaksPerSecond;
+      }
+      setRibbitCount((prev) => prev + totalCroaksPerSecond);
+    }, 1000);
+
     return () => clearInterval(interval);
-  }, []);
+  }, [ownedFrogs]);
 
   const buyFrog = (frogName, cost) => {
+    const frog = buyableFrogsList.find(([name]) => name === frogName);
+    const frogData = frog[1];
+
     if (ribbitCount >= cost) {
       setRibbitCount((prev) => prev - cost);
-      setFrogsList((prev) => prev.filter(([name]) => name !== frogName));
+      setBuyableFrogsList((prev) => prev.filter(([name]) => name !== frogName));
+      setOwnedFrogs((prev) => [
+        ...prev,
+        [frogName, { CroaksPerSecond: frogData.CroaksPerSecond }],
+      ]);
     }
   };
 
@@ -44,7 +58,7 @@ function App() {
         >
           {isShopOpen ? "Close Shop" : "Open Shop"}
         </button>
-        {isShopOpen && <Shop frogsList={frogsList} buyFrog={buyFrog} />}
+        {isShopOpen && <Shop frogsList={buyableFrogsList} buyFrog={buyFrog} />}
       </div>
     </div>
   );
