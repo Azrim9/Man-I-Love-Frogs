@@ -1,19 +1,14 @@
 import { useState, useEffect } from "react";
 
-const useStickyState = (defaultValue, name) => {
+const useStickyState = (defaultValue, key) => {
   const [value, setValue] = useState(() => {
-    if (typeof window === "undefined" || !window.localStorage) {
-      return defaultValue;
-    }
-
-    const persistedValue = window.localStorage.getItem(name);
-
+    const persistedValue = window.localStorage.getItem(key);
     return persistedValue !== null ? JSON.parse(persistedValue) : defaultValue;
   });
 
   useEffect(() => {
-    window.localStorage.setItem(name, JSON.stringify(value));
-  }, [name, value]);
+    window.localStorage.setItem(key, JSON.stringify(value));
+  }, [value]);
   return [value, setValue];
 };
 
