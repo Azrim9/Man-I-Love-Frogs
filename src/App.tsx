@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Shop from "./components/Shop";
 import useStickyState from "./hooks/useStickyState";
 import frogs from "./frogs.json";
+import AnimatedFrog from "./components/AnimatedFrog";
 
 function App() {
   const [ribbitCount, setRibbitCount] = useStickyState(0, "count");
@@ -41,7 +42,10 @@ function App() {
 
   return (
     <div className="h-screen bg-gradient-to-b from-green-400 via-green-200 to-blue-600">
-      <div className="h-screen flex flex-col justify-between p-2">
+      <div className="flex flex-col justify-between">
+        <div className="bg-gray-500/10 flex relative w-screen h-60 overflow-hidden">
+          <AnimatedFrog />
+        </div>
         <div> Croak Points: {ribbitCount}</div>
         <button
           className="border px-4 py-1 rounded-sm self-center bg-green-500 hover:bg-green-400 fixed"
