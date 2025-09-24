@@ -14,16 +14,29 @@ function App() {
   const [ownedFrogs, setOwnedFrogs] = useStickyState([], "ownedFrogs");
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      let totalCroaksPerSecond = 0;
+    let totalCPS = 0;
+
+    const recalc = () => {
+      let sum = 0;
       for (let i = 0; i < ownedFrogs.length; i++) {
         let frogData = ownedFrogs[i][1];
-        totalCroaksPerSecond = totalCroaksPerSecond + frogData.CroaksPerSecond;
+        sum = sum + frogData.CroaksPerSecond;
       }
-      setRibbitCount((prev) => prev + totalCroaksPerSecond);
-    }, 1000);
+      totalCPS = sum;
+    };
 
-    return () => clearInterval(interval);
+    recalc();
+
+    const tickInterval = setInterval(() => {
+      setRibbitCount((prev) => prev + totalCPS / 10);
+    }, 100);
+
+    const recalcInterval = setInterval(recalc, 5000);
+
+    return () => {
+      clearInterval(tickInterval);
+      clearInterval(recalcInterval);
+    };
   }, [ownedFrogs]);
 
   const buyFrog = (frogName, cost) => {
@@ -46,7 +59,7 @@ function App() {
         <div className="bg-gray-500/10 flex relative w-screen h-60 overflow-hidden">
           <AnimatedFrog />
         </div>
-        <div> Croak Points: {ribbitCount}</div>
+        <div className="p-2"> Croak Points: {ribbitCount.toFixed(1)}</div>
         <button
           className="border px-4 py-1 rounded-sm self-center bg-green-500 hover:bg-green-400 fixed"
           onClick={() => {
