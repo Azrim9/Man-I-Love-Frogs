@@ -57,7 +57,9 @@ function App() {
     <div className="h-screen bg-gradient-to-b from-green-400 via-green-200 to-blue-600">
       <div className="flex flex-col justify-between">
         <div className="bg-gray-500/10 flex relative w-screen h-60 overflow-hidden">
-          <AnimatedFrog />
+          {ownedFrogs.map(([frogName]) => (
+            <AnimatedFrog key={frogName} frogName={frogName} />
+          ))}
         </div>
         <div className="p-2"> Croak Points: {ribbitCount.toFixed(1)}</div>
         <button
