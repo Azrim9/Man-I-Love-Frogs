@@ -5,6 +5,7 @@ import frogs from "./frogs.json";
 import AnimatedFrog from "./components/AnimatedFrog";
 
 function App() {
+  const [userName, setUserName] = useState("Player");
   const [ribbitCount, setRibbitCount] = useStickyState(0, "count");
   const [isShopOpen, setIsShopOpen] = useState(false);
   const [buyableFrogsList, setBuyableFrogsList] = useStickyState(
@@ -12,6 +13,39 @@ function App() {
     "frogs"
   );
   const [ownedFrogs, setOwnedFrogs] = useStickyState([], "ownedFrogs");
+
+  useEffect(() => {
+    fetch(`http://localhost:4000/load/${userName}`)
+      .then((res) => {
+        if (!res.ok) throw new Error("No saved game found");
+        return res.json();
+      })
+      .then((data) => {
+        setRibbitCount(data.ribbitCount);
+        setOwnedFrogs(data.ownedFrogs);
+        const ownedNames = data.ownedFrogs.map((f) => f[0]);
+        setBuyableFrogsList((prev) =>
+          prev.filter(([name]) => !ownedNames.includes(name))
+        );
+      })
+      .catch((err) => console.log("Loading game failed:", err));
+  }, [userName]);
+
+  const saveGame = () => {
+    fetch("http://localhost:4000/save", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userName, ribbitCount, ownedFrogs }),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log("Game saved:", data))
+      .catch((err) => console.log("Save failed", err));
+  };
+
+  useEffect(() => {
+    const interval = setInterval(saveGame, 45000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     let totalCPS = 0;
@@ -51,6 +85,7 @@ function App() {
         [frogName, { CroaksPerSecond: frogData.CroaksPerSecond }],
       ]);
     }
+    saveGame();
   };
 
   return (

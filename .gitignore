@@ -1,0 +1,12 @@
+# Node modules (all subfolders)
+**/node_modules/
+
+# SQLite DBs
+**/*.sqlite
+**/*.sqlite3
+
+# Logs
+**/*.log
+
+# OS junk
+.DS_Store
