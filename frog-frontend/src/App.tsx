@@ -63,7 +63,7 @@ function App() {
         </div>
         <div className="p-2"> Croak Points: {ribbitCount.toFixed(1)}</div>
         <button
-          className="border px-4 py-1 rounded-sm self-center bg-green-500 hover:bg-green-400 fixed"
+          className="border px-4 py-1 rounded-sm self-center bottom-1 bg-green-500 hover:bg-green-400 fixed"
           onClick={() => {
             setRibbitCount(ribbitCount + 1);
           }}
