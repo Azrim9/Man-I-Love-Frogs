@@ -20,7 +20,7 @@ const db = new sqlite3.Database("game.db", (err) => {
 db.run(
   `CREATE TABLE IF NOT EXISTS gamestate (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT UNIQUE,
+    userName TEXT UNIQUE,
     ribbitCount REAL,
     ownedFrogs TEXT
   )`
@@ -28,21 +28,21 @@ db.run(
 
 // Save game state endpoint
 app.post("/save", (req, res) => {
-  const { username, ribbitCount, ownedFrogs } = req.body;
+  const { userName, ribbitCount, ownedFrogs } = req.body;
   const ownedFrogsStr = JSON.stringify(ownedFrogs);
 
   db.run(
-    `INSERT INTO gamestate (username, ribbitCount, ownedFrogs) 
+    `INSERT INTO gamestate (userName, ribbitCount, ownedFrogs) 
     VALUES (?, ?, ?)
-    ON CONFLICT(username)
+    ON CONFLICT(userName)
     DO UPDATE SET ribbitCount = excluded.ribbitCount,
                     ownedFrogs = excluded.ownedFrogs`,
-    [username, ribbitCount, ownedFrogsStr],
+    [userName, ribbitCount, ownedFrogsStr],
     function (err) {
       if (err) return res.status(500).json({ error: err.message });
       res.json({
         success: true,
-        username,
+        userName,
         ribbitCount,
         ownedFrogs,
       });
@@ -51,11 +51,11 @@ app.post("/save", (req, res) => {
 });
 
 // Load latest game state for user
-app.get("/load/:username", (req, res) => {
-  const { username } = req.params;
+app.get("/load/:userName", (req, res) => {
+  const { userName } = req.params;
   db.get(
-    `SELECT * FROM gamestate WHERE username = ?`,
-    [username],
+    `SELECT * FROM gamestate WHERE userName = ?`,
+    [userName],
     (err, row) => {
       if (err) return res.status(500).json({ error: err.message });
       if (!row) return res.status(404).json({ error: "No saved game" });
