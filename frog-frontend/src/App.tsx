@@ -89,7 +89,12 @@ function App() {
   };
 
   return (
-    <div className="h-screen bg-gradient-to-b from-green-400 via-green-200 to-blue-600">
+    <div
+      className="h-screen bg-gradient-to-b from-green-400 via-green-200 to-blue-600"
+      onClick={() => {
+        setRibbitCount(ribbitCount + 1);
+      }}
+    >
       <div className="flex flex-col justify-between">
         <div className="bg-gray-500/10 flex relative w-screen h-60 overflow-hidden">
           {ownedFrogs.map(([frogName]) => (
@@ -98,17 +103,11 @@ function App() {
         </div>
         <div className="p-2"> Croak Points: {ribbitCount.toFixed(1)}</div>
         <button
-          className="border px-4 py-1 rounded-sm self-center bottom-1 bg-green-500 hover:bg-green-400 fixed"
-          onClick={() => {
-            setRibbitCount(ribbitCount + 1);
-          }}
-        >
-          Croak
-        </button>
-
-        <button
           className="border px-4 py-1 rounded-sm self-center bg-green-500 hover:bg-green-400 fixed bottom-1 right-2"
-          onClick={() => setIsShopOpen(!isShopOpen)}
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsShopOpen(!isShopOpen);
+          }}
         >
           {isShopOpen ? "Close Shop" : "Open Shop"}
         </button>
