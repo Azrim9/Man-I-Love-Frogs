@@ -13,6 +13,21 @@ function App() {
     "frogs"
   );
   const [ownedFrogs, setOwnedFrogs] = useStickyState([], "ownedFrogs");
+  const [floaters, setFloaters] = useState([]);
+
+  const handleBackgroundClick = (e) => {
+    setRibbitCount((prev) => prev + 1);
+
+    const id = Date.now();
+    const x = e.clientX;
+    const y = e.clientY;
+
+    setFloaters((prev) => [...prev, { id, x, y }]);
+
+    setTimeout(() => {
+      setFloaters((prev) => prev.filter((f) => f.id !== id));
+    }, 1000);
+  };
 
   useEffect(() => {
     fetch(`http://localhost:4000/load/${userName}`)
@@ -91,9 +106,7 @@ function App() {
   return (
     <div
       className="h-screen bg-gradient-to-b from-green-400 via-green-200 to-blue-600"
-      onClick={() => {
-        setRibbitCount(ribbitCount + 1);
-      }}
+      onClick={handleBackgroundClick}
     >
       <div className="flex flex-col justify-between">
         <div className="bg-gray-500/10 flex relative w-screen h-60 overflow-hidden">
@@ -102,6 +115,17 @@ function App() {
           ))}
         </div>
         <div className="p-2"> Croak Points: {ribbitCount.toFixed(1)}</div>
+
+        {floaters.map((f) => (
+          <div
+            key={f.id}
+            className="absolute text-black font-bold pointer-events-none animate-floater"
+            style={{ left: f.x, top: f.y }}
+          >
+            +1
+          </div>
+        ))}
+
         <button
           className="border px-4 py-1 rounded-sm self-center bg-green-500 hover:bg-green-400 fixed bottom-1 right-2"
           onClick={(e) => {
