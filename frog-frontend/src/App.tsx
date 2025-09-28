@@ -3,6 +3,10 @@ import Shop from "./components/Shop";
 import useStickyState from "./hooks/useStickyState";
 import frogs from "./frogs.json";
 import AnimatedFrog from "./components/AnimatedFrog";
+import useLoadGame from "./hooks/useLoadGame";
+import useAutoSaveGame from "./hooks/useAutoSaveGame";
+import useRibbitTickRate from "./hooks/useRibbitTickRate";
+import { saveGame } from "./utils/gameAction";
 
 function App() {
   const [userName, setUserName] = useState("Player");
@@ -29,65 +33,6 @@ function App() {
     }, 1000);
   };
 
-  useEffect(() => {
-    fetch(`http://localhost:4000/load/${userName}`)
-      .then((res) => {
-        if (!res.ok) throw new Error("No saved game found");
-        return res.json();
-      })
-      .then((data) => {
-        setRibbitCount(data.ribbitCount);
-        setOwnedFrogs(data.ownedFrogs);
-        const ownedNames = data.ownedFrogs.map((f) => f[0]);
-        setBuyableFrogsList((prev) =>
-          prev.filter(([name]) => !ownedNames.includes(name))
-        );
-      })
-      .catch((err) => console.log("Loading game failed:", err));
-  }, [userName]);
-
-  const saveGame = () => {
-    fetch("http://localhost:4000/save", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userName, ribbitCount, ownedFrogs }),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log("Game saved:", data))
-      .catch((err) => console.log("Save failed", err));
-  };
-
-  useEffect(() => {
-    const interval = setInterval(saveGame, 45000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    let totalCPS = 0;
-
-    const recalc = () => {
-      let sum = 0;
-      for (let i = 0; i < ownedFrogs.length; i++) {
-        let frogData = ownedFrogs[i][1];
-        sum = sum + frogData.CroaksPerSecond;
-      }
-      totalCPS = sum;
-    };
-
-    recalc();
-
-    const tickInterval = setInterval(() => {
-      setRibbitCount((prev) => prev + totalCPS / 10);
-    }, 100);
-
-    const recalcInterval = setInterval(recalc, 5000);
-
-    return () => {
-      clearInterval(tickInterval);
-      clearInterval(recalcInterval);
-    };
-  }, [ownedFrogs]);
-
   const buyFrog = (frogName, cost) => {
     const frog = buyableFrogsList.find(([name]) => name === frogName);
     const frogData = frog[1];
@@ -100,8 +45,12 @@ function App() {
         [frogName, { CroaksPerSecond: frogData.CroaksPerSecond }],
       ]);
     }
-    saveGame();
+    saveGame({ userName, ribbitCount, ownedFrogs });
   };
+
+  useLoadGame(userName, setRibbitCount, setOwnedFrogs, setBuyableFrogsList);
+  useAutoSaveGame(() => saveGame({ userName, ribbitCount, ownedFrogs }));
+  useRibbitTickRate(ownedFrogs, setRibbitCount);
 
   return (
     <div
@@ -119,7 +68,7 @@ function App() {
         {floaters.map((f) => (
           <div
             key={f.id}
-            className="absolute text-black font-bold pointer-events-none animate-floater"
+            className="absolute pointer-events-none text-black font-bold animate-floater"
             style={{ left: f.x, top: f.y }}
           >
             +1
